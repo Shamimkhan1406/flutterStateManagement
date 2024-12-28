@@ -33,12 +33,17 @@ class HomePage extends StatelessWidget {
 
       ),
       body: Center(
-        child: Text('${Provider.of<CounterProvider>(context,listen: true).getCount()}',style: const TextStyle(fontSize: 26),),
+        child: Consumer<CounterProvider>(
+          builder: (ctx, value, child) =>
+          Text('${ctx.watch<CounterProvider>().getCount()}',style: const TextStyle(fontSize: 26),)
+          //Text('${Provider.of<CounterProvider>(ctx,listen: true).getCount()}',style: const TextStyle(fontSize: 26),)
+        )
+        //Text('${Provider.of<CounterProvider>(context,listen: true).getCount()}',style: const TextStyle(fontSize: 26),),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-         Provider.of<CounterProvider>(context,listen: false).incrementCount();
-         
+         //Provider.of<CounterProvider>(context,listen: false).incrementCount();
+         context.read<CounterProvider>().incrementCount();
         },
         child: const Icon(Icons.add),
         

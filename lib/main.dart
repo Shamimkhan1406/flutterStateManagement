@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:golbal_state_management/counterProvider.dart';
+import 'package:provider/provider.dart';
 
 void main()
 {
@@ -12,14 +14,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'global state management',
-      home: HomePage(),
+      home: ChangeNotifierProvider(
+        create: (context)=> CounterProvider(),
+        child: HomePage(),
+      ),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
 
-  int _count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +33,11 @@ class HomePage extends StatelessWidget {
 
       ),
       body: Center(
-        child: Text('$_count',style: const TextStyle(fontSize: 26),),
+        child: Text('${Provider.of<CounterProvider>(context,listen: true).getCount()}',style: const TextStyle(fontSize: 26),),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          _count++;
+         Provider.of<CounterProvider>(context,listen: false).incrementCount();
          
         },
         child: const Icon(Icons.add),
